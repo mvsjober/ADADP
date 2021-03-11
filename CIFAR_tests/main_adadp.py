@@ -41,6 +41,7 @@ from torch import nn
 from torch import optim
 from torch.autograd import Variable
 import torchvision
+import torch.nn.functional as F
 
 from torchvision import datasets, transforms
 
@@ -397,6 +398,9 @@ priv_pars['T'], priv_pars['eps'],priv_pars['delta'], priv_pars['sigma'], priv_pa
 accs = []
 epsilons = []
 
+from datetime import datetime
+now = datetime.now()
+
 for epoch in range(1,n_epochs+1):
 
   loss, acc = test(model1, model2, epoch)
@@ -409,7 +413,7 @@ for epoch in range(1,n_epochs+1):
     update_privacy_pars(priv_pars)
     epsilons.append(priv_pars['eps'])
 
-
+print('Training {} epochs duration:'.format(n_epochs), datetime.now()-now)
 
 # Save the test accuracies
 np.save('accs_' +str(run_id) + '_' + str(noise_sigma) + '_' + str(batch_size),accs)
